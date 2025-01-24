@@ -1,7 +1,11 @@
 {
-    "name": "freescout-helpdesk/discord",
+    "name": "freescout-helpdesk/multi-communication-platform",
     "description": "",
     "authors": [
+        {
+            "name": "Iain Cuthbertson",
+            "email": "bigcuthy@gmail.com"
+        },
         {
             "name": "Derzsi Daniel",
             "email": "daniel@tohka.us"
@@ -10,7 +14,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Modules\\Discord\\Providers\\DiscordModuleServiceProvider"
+                "Modules\\MultiCommunicationPlatform\\Providers\\MultiCommunicationPlatformModuleServiceProvider"
             ],
             "aliases": {}
         }
@@ -23,7 +27,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Modules\\Discord\\": ""
+            "Modules\\MultiCommunicationPlatform\\": ""
         }
     },
     "config": {
