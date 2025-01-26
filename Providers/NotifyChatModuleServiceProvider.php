@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factory;
 use Modules\NotifyChat\Entities\NotifyChatSettings;
 use App\Misc;
 
-define('SAMPLE_MODULE', 'notifychat');
+define('NOTIFY_CHAT_MODULE', 'notifychat');
 
 class NotifyChatModuleServiceProvider extends ServiceProvider
 {
