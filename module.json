@@ -1,6 +1,6 @@
 {
     "name": "Notify Chat",
-    "alias": "notify-chat",
+    "alias": "notifychat",
     "description": "Module that sends conversation notifications to channels on multiple communication platforms",
     "version": "1.0.0",
     "keywords": [],

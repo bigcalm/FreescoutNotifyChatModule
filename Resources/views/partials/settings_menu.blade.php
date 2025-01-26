@@ -1,1 +1,1 @@
-<li @if (Route::is('notify-chat.settings'))class="active"@endif><a href="{{ route('notify-chat.settings', ['mailbox_id'=>$mailbox->id]) }}"><i class="glyphicon glyphicon-envelope"></i>Notify Chat</a></li>
+<li @if (Route::is('notifychat.settings'))class="active"@endif><a href="{{ route('notifychat.settings', ['mailbox_id'=>$mailbox->id]) }}"><i class="glyphicon glyphicon-envelope"></i>Notify Chat</a></li>

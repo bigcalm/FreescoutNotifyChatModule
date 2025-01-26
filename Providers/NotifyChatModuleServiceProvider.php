@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factory;
 use Modules\NotifyChat\Entities\NotifyChatSettings;
 use App\Misc;
 
-define('SAMPLE_MODULE', 'notify-chat');
+define('SAMPLE_MODULE', 'notifychat');
 
 class NotifyChatModuleServiceProvider extends ServiceProvider
 {
@@ -33,7 +33,7 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
 
         \Eventy::addAction('mailboxes.settings.menu', function($mailbox) {
             if (auth()->user()->isAdmin()) {
-                echo \View::make('notify-chat::partials/settings_menu', ['mailbox' => $mailbox])->render();
+                echo \View::make('notifychat::partials/settings_menu', ['mailbox' => $mailbox])->render();
             }
         }, 80);
         \Eventy::addAction('conversation.created_by_customer', function($conversation, $thread, $customer) {
@@ -121,10 +121,10 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            __DIR__.'/../Config/config.php' => config_path('notify-chat.php'),
+            __DIR__.'/../Config/config.php' => config_path('notifychat.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__.'/../Config/config.php', 'notify-chat'
+            __DIR__.'/../Config/config.php', 'notifychat'
         );
     }
 
@@ -135,7 +135,7 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
      */
     public function registerViews()
     {
-        $viewPath = resource_path('views/modules/notify-chat');
+        $viewPath = resource_path('views/modules/notifychat');
 
         $sourcePath = __DIR__.'/../Resources/views';
 
@@ -144,8 +144,8 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
         ],'views');
 
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
-            return $path . '/modules/notify-chat';
-        }, \Config::get('view.paths')), [$sourcePath]), 'notify-chat');
+            return $path . '/modules/notifychat';
+        }, \Config::get('view.paths')), [$sourcePath]), 'notifychat');
     }
 
     /**
@@ -155,12 +155,12 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
      */
     public function registerTranslations()
     {
-        $langPath = resource_path('lang/modules/notify-chat');
+        $langPath = resource_path('lang/modules/notifychat');
 
         if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, 'notify-chat');
+            $this->loadTranslationsFrom($langPath, 'notifychat');
         } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'notify-chat');
+            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'notifychat');
         }
     }
 

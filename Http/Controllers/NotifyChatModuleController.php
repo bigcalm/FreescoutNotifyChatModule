@@ -16,7 +16,7 @@ class NotifyChatModuleController extends Controller
      */
     public function index()
     {
-        return view('notify-chat::index');
+        return view('notifychat::index');
     }
 
     /**
@@ -25,7 +25,7 @@ class NotifyChatModuleController extends Controller
      */
     public function create()
     {
-        return view('notify-chat::create');
+        return view('notifychat::create');
     }
 
     /**
@@ -43,7 +43,7 @@ class NotifyChatModuleController extends Controller
      */
     public function show()
     {
-        return view('notify-chat::show');
+        return view('notifychat::show');
     }
 
     /**
@@ -52,7 +52,7 @@ class NotifyChatModuleController extends Controller
      */
     public function edit()
     {
-        return view('notify-chat::edit');
+        return view('notifychat::edit');
     }
 
     /**
@@ -84,7 +84,7 @@ class NotifyChatModuleController extends Controller
             $settings['webhook_url'] = "";
         }
 
-        return view('notify-chat::settings', [
+        return view('notifychat::settings', [
             'mailbox'   => $mailbox,
             'settings'  => $settings
         ]);
@@ -99,6 +99,6 @@ class NotifyChatModuleController extends Controller
             ]
         );
 
-        return redirect()->route('notify-chat.settings', ['mailbox_id' => $mailbox_id]);
+        return redirect()->route('notifychat.settings', ['mailbox_id' => $mailbox_id]);
     }
 }
