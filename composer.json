@@ -1,5 +1,5 @@
 {
-    "name": "freescout-helpdesk/multi-communication-platform",
+    "name": "freescout-helpdesk/notify-chat",
     "description": "",
     "authors": [
         {
@@ -14,7 +14,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Modules\\MultiCommunicationPlatform\\Providers\\MultiCommunicationPlatformModuleServiceProvider"
+                "Modules\\NotifyChat\\Providers\\NotifyChatModuleServiceProvider"
             ],
             "aliases": {}
         }
@@ -27,7 +27,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Modules\\MultiCommunicationPlatform\\": ""
+            "Modules\\NotifyChat\\": ""
         }
     },
     "config": {

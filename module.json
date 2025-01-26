@@ -1,14 +1,14 @@
 {
-    "name": "MultiCommunicationPlatform Notifications",
-    "alias": "multi-communication-platform",
+    "name": "Notify Chat",
+    "alias": "notify-chat",
     "description": "Module that sends conversation notifications to channels on multiple communication platforms",
     "version": "1.0.0",
     "keywords": [],
-    "img": "/modules/MultiCommunicationPlatform/img/TBA-256x256.jpg",
+    "img": "/modules/NotifyChat/img/TBA-256x256.jpg",
     "active": 1,
     "order": 0,
     "providers": [
-        "Modules\\MultiCommunicationPlatform\\Providers\\MultiCommunicationPlatformModuleServiceProvider"
+        "Modules\\NotifyChat\\Providers\\NotifyChatModuleServiceProvider"
     ],
     "aliases": {},
     "files": [

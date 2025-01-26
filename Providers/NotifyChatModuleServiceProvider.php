@@ -1,15 +1,15 @@
 <?php
 
-namespace Modules\Discord\Providers;
+namespace Modules\NotifyChat\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
-use Modules\Discord\Entities\DiscordSettings;
+use Modules\NotifyChat\Entities\NotifyChatSettings;
 use App\Misc;
 
-define('SAMPLE_MODULE', 'discord');
+define('SAMPLE_MODULE', 'notify-chat');
 
-class DiscordModuleServiceProvider extends ServiceProvider
+class NotifyChatModuleServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
@@ -33,11 +33,11 @@ class DiscordModuleServiceProvider extends ServiceProvider
 
         \Eventy::addAction('mailboxes.settings.menu', function($mailbox) {
             if (auth()->user()->isAdmin()) {
-                echo \View::make('discord::partials/settings_menu', ['mailbox' => $mailbox])->render();
+                echo \View::make('notify-chat::partials/settings_menu', ['mailbox' => $mailbox])->render();
             }
         }, 80);
         \Eventy::addAction('conversation.created_by_customer', function($conversation, $thread, $customer) {
-            $settings = DiscordSettings::findOrFail($conversation->mailbox_id);
+            $settings = NotifyChatSettings::findOrFail($conversation->mailbox_id);
 
             if (!$settings->enabled || !$settings->webhook_url) {
                 return;
@@ -70,7 +70,7 @@ class DiscordModuleServiceProvider extends ServiceProvider
         }, 20, 3);
 
         \Eventy::addAction('conversation.customer_replied', function($conversation, $thread, $customer) {
-            $settings = DiscordSettings::findOrFail($conversation->mailbox_id);
+            $settings = NotifyChatSettings::findOrFail($conversation->mailbox_id);
 
             if (!$settings->enabled || !$settings->webhook_url) {
                 return;
@@ -121,10 +121,10 @@ class DiscordModuleServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            __DIR__.'/../Config/config.php' => config_path('discord.php'),
+            __DIR__.'/../Config/config.php' => config_path('notify-chat.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__.'/../Config/config.php', 'discord'
+            __DIR__.'/../Config/config.php', 'notify-chat'
         );
     }
 
@@ -135,7 +135,7 @@ class DiscordModuleServiceProvider extends ServiceProvider
      */
     public function registerViews()
     {
-        $viewPath = resource_path('views/modules/discord');
+        $viewPath = resource_path('views/modules/notify-chat');
 
         $sourcePath = __DIR__.'/../Resources/views';
 
@@ -144,8 +144,8 @@ class DiscordModuleServiceProvider extends ServiceProvider
         ],'views');
 
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
-            return $path . '/modules/discord';
-        }, \Config::get('view.paths')), [$sourcePath]), 'discord');
+            return $path . '/modules/notify-chat';
+        }, \Config::get('view.paths')), [$sourcePath]), 'notify-chat');
     }
 
     /**
@@ -155,12 +155,12 @@ class DiscordModuleServiceProvider extends ServiceProvider
      */
     public function registerTranslations()
     {
-        $langPath = resource_path('lang/modules/discord');
+        $langPath = resource_path('lang/modules/notify-chat');
 
         if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, 'discord');
+            $this->loadTranslationsFrom($langPath, 'notify-chat');
         } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'discord');
+            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'notify-chat');
         }
     }
 

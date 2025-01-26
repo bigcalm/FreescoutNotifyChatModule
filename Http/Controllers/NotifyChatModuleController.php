@@ -1,14 +1,14 @@
 <?php
 
-namespace Modules\Discord\Http\Controllers;
+namespace Modules\NotifyChat\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use App\Mailbox;
-use Modules\Discord\Entities\DiscordSettings;
+use Modules\NotifyChat\Entities\NotifyChatSettings;
 
-class DiscordModuleController extends Controller
+class NotifyChatModuleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class DiscordModuleController extends Controller
      */
     public function index()
     {
-        return view('discord::index');
+        return view('notify-chat::index');
     }
 
     /**
@@ -25,7 +25,7 @@ class DiscordModuleController extends Controller
      */
     public function create()
     {
-        return view('discord::create');
+        return view('notify-chat::create');
     }
 
     /**
@@ -43,7 +43,7 @@ class DiscordModuleController extends Controller
      */
     public function show()
     {
-        return view('discord::show');
+        return view('notify-chat::show');
     }
 
     /**
@@ -52,7 +52,7 @@ class DiscordModuleController extends Controller
      */
     public function edit()
     {
-        return view('discord::edit');
+        return view('notify-chat::edit');
     }
 
     /**
@@ -76,7 +76,7 @@ class DiscordModuleController extends Controller
     public function settings($mailbox_id) {
         $mailbox = Mailbox::findOrFail($mailbox_id);
 
-        $settings = DiscordSettings::find($mailbox_id);
+        $settings = NotifyChatSettings::find($mailbox_id);
 
         if (empty($settings)) {
             $settings['mailbox_id'] = $mailbox_id;
@@ -84,14 +84,14 @@ class DiscordModuleController extends Controller
             $settings['webhook_url'] = "";
         }
 
-        return view('discord::settings', [
+        return view('notify-chat::settings', [
             'mailbox'   => $mailbox,
             'settings'  => $settings
         ]);
     }
 
     public function saveSettings($mailbox_id, Request $request) {
-        DiscordSettings::updateOrCreate(
+        NotifyChatSettings::updateOrCreate(
             ['mailbox_id' => $mailbox_id],
             [
                 'enabled' => isset($_POST['enabled']),
@@ -99,6 +99,6 @@ class DiscordModuleController extends Controller
             ]
         );
 
-        return redirect()->route('discord.settings', ['mailbox_id' => $mailbox_id]);
+        return redirect()->route('notify-chat.settings', ['mailbox_id' => $mailbox_id]);
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMultiCommunicationPlatformSettingsTable extends Migration
+class CreateNotifyChatSettingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateMultiCommunicationPlatformSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('multi_communication_platform_settings', function (Blueprint $table) {
+        Schema::create('notify_chat_settings', function (Blueprint $table) {
             $table->integer('mailbox_id');
             $table->boolean('discord_enabled');
             $table->string('discord_webhook_url');
@@ -31,6 +31,6 @@ class CreateMultiCommunicationPlatformSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('multi_communication_platform_settings');
+        Schema::dropIfExists('notify_chat_settings');
     }
 }

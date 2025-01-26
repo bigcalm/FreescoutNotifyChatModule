@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title_full', 'Discord - ' . $mailbox->name)
+@section('title_full', 'Notify Chat - ' . $mailbox->name)
 
 @section('body_attrs')@parent data-mailbox_id="{{ $mailbox->id }}"@endsection
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class MigrateDiscordSettingsToMultiCommunicationPlatformSettings extends Migration
+class MigrateDiscordSettingsToNotifyChatSettings extends Migration
 {
     /**
      * Run the migrations.
@@ -18,9 +18,9 @@ class MigrateDiscordSettingsToMultiCommunicationPlatformSettings extends Migrati
             return;
         }
 
-        // copy data from discord table to multi_communication_platform_settings table
+        // copy data from discord table to notify_chat_settings table
         DB::table('discord')->get()->each(function ($discord) {
-            DB::table('multi_communication_platform_settings')->insert([
+            DB::table('notify_chat_settings')->insert([
                 'mailbox_id' => $discord->mailbox_id,
                 'discord_enabled' => $discord->enabled,
                 'discord_webhook_url' => $discord->webhook_url,
@@ -52,8 +52,8 @@ class MigrateDiscordSettingsToMultiCommunicationPlatformSettings extends Migrati
             $table->string('webhook_url');
         });
 
-        // copy data from multi_communication_platform_settings table to discord table
-        DB::table('multi_communication_platform_settings')->get()->each(function ($multi) {
+        // copy data from notify_chat_settings table to discord table
+        DB::table('notify_chat_settings')->get()->each(function ($multi) {
             DB::table('discord')->insert([
                 'mailbox_id' => $multi->mailbox_id,
                 'enabled' => $multi->discord_enabled,

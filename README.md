@@ -1,14 +1,14 @@
-# Multi communication notification module for FreeScout
+# Multiple chat notifications module for FreeScout
 
-This module sends a notification to a channel on Discord, Slack, or Mattermost:
+This module sends a notification to a channel on Discord, Slack, or Mattermost (more to be added):
 - when a new support ticket is created by a customer
 - when an existing support ticket receives a new reply from a customer.
 
 ## Installation
 
 1. Navigate to your Modules folder e.g. `cd /var/www/html/Modules`
-2. Run `git clone https://github.com/bigcalm/FreescoutMultiCommunicationPlatformModule.git multiCommunicationPlatform`
-3. Activate the module "MultiCommunicationPlatform Notifications" via the Modules page in FreeScout.
+2. Run `git clone https://github.com/bigcalm/FreescoutNotifyChatModule.git NotifyChat`
+3. Activate the module "Notify Chat" via the Modules page in FreeScout.
 4. Create a new webhook on your communication platform of choice and copy the URL.
 5. Set up the webhook URL in each mailbox you wish to receive notifications in.
 
