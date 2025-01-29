@@ -11,36 +11,98 @@
 
 @section('content')
     <div class="section-heading">
-        Discord
+        Notify Chat - {{ $mailbox->name }}
     </div>
     <div class="col-xs-12">
         <form class="form-horizontal margin-top margin-bottom" method="POST" action="">
             {{ csrf_field() }}
 
-            <div class="form-group">
-                <label for="enabled" class="col-sm-2 control-label">{{ __("Enable Discord notifications") }}</label>
+            <fieldset>
+                <legend>{{ __("Discord settings") }}</legend>
 
-                <div class="col-sm-6">
-                    <div class="controls">
-                        <div class="onoffswitch-wrap">
-                            <div class="onoffswitch">
-                                <input type="checkbox" name="enabled" id="enabled" class="onoffswitch-checkbox"
-                                    {!! $settings['enabled'] ? "checked" : "" !!}
-                                >
-                                <label class="onoffswitch-label" for="enabled"></label>
+                <div class="form-group">
+                    <label for="discord_enabled" class="col-sm-2 control-label">{{ __("Enable Discord notifications") }}</label>
+
+                    <div class="col-sm-6">
+                        <div class="controls">
+                            <div class="onoffswitch-wrap">
+                                <div class="onoffswitch">
+                                    <input type="checkbox" name="discord_enabled" id="discord_enabled" class="onoffswitch-checkbox"
+                                        {!! $settings['discord_enabled'] ? "checked" : "" !!}
+                                    >
+                                    <label class="onoffswitch-label" for="discord_enabled"></label>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label class="col-sm-2 control-label">{{ __("Discord webhook URL") }}</label>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ __("Discord webhook URL") }}</label>
 
-                <div class="col-sm-6">
-                    <input name="webhook_url" class="form-control" placeholder="https://discord.com/api/webhooks/..." value="{{ $settings['webhook_url'] }}" required />
+                    <div class="col-sm-6">
+                        <input name="discord_webhook_url" class="form-control" placeholder="https://discord.com/api/webhooks/..." value="{{ $settings['discord_webhook_url'] }}" required />
+                    </div>
                 </div>
-            </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>{{ __("Slack settings") }}</legend>
+
+                <div class="form-group">
+                    <label for="slack_enabled" class="col-sm-2 control-label">{{ __("Enable Slack notifications") }}</label>
+
+                    <div class="col-sm-6">
+                        <div class="controls">
+                            <div class="onoffswitch-wrap">
+                                <div class="onoffswitch">
+                                    <input type="checkbox" name="slack_enabled" id="slack_enabled" class="onoffswitch-checkbox"
+                                        {!! $settings['slack_enabled'] ? "checked" : "" !!}
+                                    >
+                                    <label class="onoffswitch-label" for="slack_enabled"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ __("Slack webhook URL") }}</label>
+
+                    <div class="col-sm-6">
+                        <input name="slack_webhook_url" class="form-control" placeholder="https://discord.com/api/webhooks/..." value="{{ $settings['slack_webhook_url'] }}" required />
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>{{ __("Mattermost settings") }}</legend>
+
+                <div class="form-group">
+                    <label for="mattermost_enabled" class="col-sm-2 control-label">{{ __("Enable Mattermost notifications") }}</label>
+
+                    <div class="col-sm-6">
+                        <div class="controls">
+                            <div class="onoffswitch-wrap">
+                                <div class="onoffswitch">
+                                    <input type="checkbox" name="mattermost_enabled" id="mattermost_enabled" class="onoffswitch-checkbox"
+                                        {!! $settings['mattermost_enabled'] ? "checked" : "" !!}
+                                    >
+                                    <label class="onoffswitch-label" for="mattermost_enabled"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ __("Mattermost webhook URL") }}</label>
+
+                    <div class="col-sm-6">
+                        <input name="mattermost_webhook_url" class="form-control" placeholder="https://discord.com/api/webhooks/..." value="{{ $settings['mattermost_webhook_url'] }}" required />
+                    </div>
+                </div>
+            </fieldset>
 
             <div class="form-group margin-top margin-bottom">
                 <div class="col-sm-6 col-sm-offset-2">
