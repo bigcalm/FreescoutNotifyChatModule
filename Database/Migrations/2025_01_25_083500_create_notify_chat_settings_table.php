@@ -15,12 +15,12 @@ class CreateNotifyChatSettingsTable extends Migration
     {
         Schema::create('notify_chat_settings', function (Blueprint $table) {
             $table->integer('mailbox_id');
-            $table->boolean('discord_enabled');
-            $table->string('discord_webhook_url');
-            $table->boolean('slack_enabled');
-            $table->string('slack_webhook_url');
-            $table->boolean('mattermost_enabled');
-            $table->string('mattermost_webhook_url');
+            $table->boolean('discord_enabled')->default(false);
+            $table->string('discord_webhook_url')->nullable();
+            $table->boolean('slack_enabled')->default(false);
+            $table->string('slack_webhook_url')->nullable();
+            $table->boolean('mattermost_enabled')->default(false);
+            $table->string('mattermost_webhook_url')->nullable();
         });
     }
 
