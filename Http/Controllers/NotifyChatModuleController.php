@@ -80,8 +80,12 @@ class NotifyChatModuleController extends Controller
 
         if (empty($settings)) {
             $settings['mailbox_id'] = $mailbox_id;
-            $settings["enabled"] = false;
-            $settings['webhook_url'] = "";
+            $settings["discord_enabled"] = false;
+            $settings['discord_webhook_url'] = "";
+            $settings["slack_enabled"] = false;
+            $settings['slack_webhook_url'] = "";
+            $settings["mattermost_enabled"] = false;
+            $settings['mattermost_webhook_url'] = "";
         }
 
         return view('notifychat::settings', [
@@ -94,8 +98,12 @@ class NotifyChatModuleController extends Controller
         NotifyChatSettings::updateOrCreate(
             ['mailbox_id' => $mailbox_id],
             [
-                'enabled' => isset($_POST['enabled']),
-                'webhook_url' => $request->get("webhook_url")
+                'discord_enabled' => isset($_POST['discord_enabled']),
+                'discord_webhook_url' => $request->get("discord_webhook_url"),
+                'slack_enabled' => isset($_POST['slack_enabled']),
+                'slack_webhook_url' => $request->get("slack_webhook_url"),
+                'mattermost_enabled' => isset($_POST['mattermost_enabled']),
+                'mattermost_webhook_url' => $request->get("mattermost_webhook_url"),
             ]
         );
 
