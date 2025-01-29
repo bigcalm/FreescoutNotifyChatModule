@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\NotifyChatPlatform\Entities;
+namespace Modules\NotifyChat\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
