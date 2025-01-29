@@ -2,6 +2,9 @@
 
 namespace Modules\NotifyChat\Providers;
 
+use App\Conversation;
+use App\Customer;
+use App\Thread;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 use Modules\NotifyChat\Entities\NotifyChatSettings;
@@ -39,67 +42,35 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
         \Eventy::addAction('conversation.created_by_customer', function($conversation, $thread, $customer) {
             $settings = NotifyChatSettings::findOrFail($conversation->mailbox_id);
 
-            if (!$settings->enabled || !$settings->webhook_url) {
-                return;
+            if ($settings->discord_enabled && !empty($settings->discord_webhook_url)) {
+                $home = \Helper::urlHome();
+                $conversation_url = $home . "/conversation/" . $conversation->id;
+
+                $this->sendDiscordEmbed(
+                    $settings->discord_webhook_url,
+                    "New Support Ticket",
+                    $conversation_url,
+                    "A new support ticket has been created!",
+                    $this->compileTicketFields($conversation, $thread, $customer)
+                );
             }
-
-            $home = \Helper::urlHome();
-            $conversation_url = $home . "/conversation/" . $conversation->id;
-
-            $this->sendEmbed($settings->webhook_url, "New Support Ticket", $conversation_url, "A new support ticket has been created!", [
-                [
-                    "name" => "Sender Name",
-                    "value" => $customer->getFullName(),
-                    "inline" => true
-                ],
-                [
-                    "name" => "Sender Address",
-                    "value" => $customer->getMainEmail(),
-                    "inline" => true
-                ],
-                [
-                    "name" => "Subject",
-                    "value" => $conversation->subject,
-                    "inline" => false
-                ],
-                [
-                    "name" => "Body",
-                    "value" => $thread->getBodyAsText().substr(0, 500)
-                ]
-            ]);
         }, 20, 3);
 
         \Eventy::addAction('conversation.customer_replied', function($conversation, $thread, $customer) {
             $settings = NotifyChatSettings::findOrFail($conversation->mailbox_id);
 
-            if (!$settings->enabled || !$settings->webhook_url) {
-                return;
+            if ($settings->discord_enabled && !empty($settings->discord_webhook_url)) {
+                $home = \Helper::urlHome();
+                $conversation_url = $home . "/conversation/" . $conversation->id;
+
+                $this->sendDiscordEmbed(
+                    $settings->discord_webhook_url,
+                    "New Reply to Ticket",
+                    $conversation_url,
+                    "A new reply has been sent by the customer!",
+                    $this->compileTicketFields($conversation, $thread, $customer)
+                );
             }
-
-            $home = \Helper::urlHome();
-            $conversation_url = $home . "/conversation/" . $conversation->id;
-
-            $this->sendEmbed($settings->webhook_url, "New Reply to Ticket", $conversation_url, "A new reply has been sent by the customer!", [
-                [
-                    "name" => "Sender Name",
-                    "value" => $customer->getFullName(),
-                    "inline" => true
-                ],
-                [
-                    "name" => "Sender Address",
-                    "value" => $customer->getMainEmail(),
-                    "inline" => true
-                ],
-                [
-                    "name" => "Subject",
-                    "value" => $conversation->subject,
-                    "inline" => false
-                ],
-                [
-                    "name" => "Body",
-                    "value" => $thread->getBodyAsText().substr(0, 500)
-                ]
-            ]);
         }, 20, 3);
     }
 
@@ -185,7 +156,32 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
         return [];
     }
 
-    public function sendEmbed($webhook_url, $title, $url, $description, $fields) {
+    public function compileTicketFields(Conversation $conversation, Thread $thread, Customer $customer): array
+    {
+        return [
+            [
+                "name" => "Sender Name",
+                "value" => $customer->getFullName(),
+                "inline" => true
+            ],
+            [
+                "name" => "Sender Address",
+                "value" => $customer->getMainEmail(),
+                "inline" => true
+            ],
+            [
+                "name" => "Subject",
+                "value" => $conversation->subject,
+                "inline" => false
+            ],
+            [
+                "name" => "Body",
+                "value" => $thread->getBodyAsText().substr(0, 500)
+            ]
+        ];
+    }
+
+    public function sendDiscordEmbed($webhook_url, $title, $url, $description, $fields) {
         $json_data = json_encode([
             "embeds" => [[
                 "title" => $title,
