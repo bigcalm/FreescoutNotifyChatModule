@@ -23,6 +23,15 @@
                 <legend>{{ __("Discord settings") }}</legend>
 
                 <div class="form-group">
+                    <div class="col-sm-6 col-sm-offset-2">
+                        <p class="help-block">
+                            <a href="https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks"
+                               target="_blank">{{ __("Discord incoming webhooks documentation") }}</a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label for="discord_enabled"
                            class="col-sm-2 control-label">{{ __("Enable Discord notifications") }}</label>
 
@@ -60,6 +69,15 @@
                 <legend>{{ __("Slack settings") }}</legend>
 
                 <div class="form-group">
+                    <div class="col-sm-6 col-sm-offset-2">
+                        <p class="help-block">
+                            <a href="https://api.slack.com/messaging/webhooks"
+                               target="_blank">{{ __("Slack incoming webhooks documentation") }}</a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label for="slack_enabled"
                            class="col-sm-2 control-label">{{ __("Enable Slack notifications") }}</label>
 
@@ -95,6 +113,15 @@
 
             <fieldset>
                 <legend>{{ __("Mattermost settings") }}</legend>
+
+                <div class="form-group">
+                    <div class="col-sm-6 col-sm-offset-2">
+                        <p class="help-block">
+                            <a href="https://developers.mattermost.com/integrate/webhooks/incoming/"
+                               target="_blank">{{ __("Mattermost incoming webhooks documentation") }}</a>
+                        </p>
+                    </div>
+                </div>
 
                 <div class="form-group">
                     <label for="mattermost_enabled"
