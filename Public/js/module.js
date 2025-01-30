@@ -8,10 +8,8 @@ document.addEventListener("DOMContentLoaded", function() {
             if (targetInput) {
                 if (checkbox.checked) {
                     targetInput.removeAttribute("disabled");
-                    targetInput.setAttribute("required", "required");
                 } else {
                     targetInput.setAttribute("disabled", "disabled");
-                    targetInput.removeAttribute("required");
                 }
             }
         });

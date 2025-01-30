@@ -2,7 +2,9 @@
 
 @section('title_full', 'Notify Chat - ' . $mailbox->name)
 
-@section('body_attrs')@parent data-mailbox_id="{{ $mailbox->id }}"@endsection
+@section('body_attrs')
+    @parent data-mailbox_id="{{ $mailbox->id }}"
+@endsection
 
 @section('sidebar')
     @include('partials/sidebar_menu_toggle')
@@ -21,13 +23,15 @@
                 <legend>{{ __("Discord settings") }}</legend>
 
                 <div class="form-group">
-                    <label for="discord_enabled" class="col-sm-2 control-label">{{ __("Enable Discord notifications") }}</label>
+                    <label for="discord_enabled"
+                           class="col-sm-2 control-label">{{ __("Enable Discord notifications") }}</label>
 
                     <div class="col-sm-6">
                         <div class="controls">
                             <div class="onoffswitch-wrap">
                                 <div class="onoffswitch">
-                                    <input type="checkbox" name="discord_enabled" id="discord_enabled" class="onoffswitch-checkbox"
+                                    <input type="checkbox" name="discord_enabled" id="discord_enabled"
+                                           class="onoffswitch-checkbox"
                                            {!! $settings['discord_enabled'] ? "checked" : "" !!}
                                            data-toggle-targets="discord_webhook_url"
                                     >
@@ -43,10 +47,11 @@
 
                     <div class="col-sm-6">
                         <input name="discord_webhook_url" id="discord_webhook_url" class="form-control"
-                            placeholder="https://discord.com/api/webhooks/..."
-                            value="{{ $settings['discord_webhook_url'] }}"
+                               placeholder="https://discord.com/api/webhooks/..."
+                               value="{{ $settings['discord_webhook_url'] }}"
+                               required="required"
                             {{ $settings['discord_enabled'] ? '' : 'disabled' }}
-                            {{ $settings['discord_enabled'] ? 'required' : '' }} />
+                        />
                     </div>
                 </div>
             </fieldset>
@@ -55,16 +60,18 @@
                 <legend>{{ __("Slack settings") }}</legend>
 
                 <div class="form-group">
-                    <label for="slack_enabled" class="col-sm-2 control-label">{{ __("Enable Slack notifications") }}</label>
+                    <label for="slack_enabled"
+                           class="col-sm-2 control-label">{{ __("Enable Slack notifications") }}</label>
 
                     <div class="col-sm-6">
                         <div class="controls">
                             <div class="onoffswitch-wrap">
                                 <div class="onoffswitch">
-                                    <input type="checkbox" name="slack_enabled" id="slack_enabled" class="onoffswitch-checkbox"
+                                    <input type="checkbox" name="slack_enabled" id="slack_enabled"
+                                           class="onoffswitch-checkbox"
+                                           data-toggle-targets="slack_webhook_url"
                                         {!! $settings['slack_enabled'] ? "checked" : "" !!}
-                                        data-toggle-targets="slack_webhook_url"
-                                    >
+                                    />
                                     <label class="onoffswitch-label" for="slack_enabled"></label>
                                 </div>
                             </div>
@@ -79,8 +86,9 @@
                         <input name="slack_webhook_url" id="slack_webhook_url" class="form-control"
                                placeholder="https://discord.com/api/webhooks/..."
                                value="{{ $settings['slack_webhook_url'] }}"
+                               required="required"
                             {{ $settings['slack_enabled'] ? '' : 'disabled' }}
-                            {{ $settings['slack_enabled'] ? 'required' : '' }} />
+                        />
                     </div>
                 </div>
             </fieldset>
