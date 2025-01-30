@@ -84,7 +84,7 @@
 
                     <div class="col-sm-6">
                         <input name="slack_webhook_url" id="slack_webhook_url" class="form-control"
-                               placeholder="https://discord.com/api/webhooks/..."
+                               placeholder="https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX"
                                value="{{ $settings['slack_webhook_url'] }}"
                                required="required"
                             {{ $settings['slack_enabled'] ? '' : 'disabled' }}
@@ -121,7 +121,7 @@
 
                     <div class="col-sm-6">
                         <input name="mattermost_webhook_url" id="mattermost_webhook_url" class="form-control"
-                               placeholder="https://discord.com/api/webhooks/..."
+                               placeholder="https://your-mattermost-server.com/hooks/xxx-generatedkey-xxx"
                                value="{{ $settings['mattermost_webhook_url'] }}"
                                required="required"
                             {{ $settings['mattermost_enabled'] ? '' : 'disabled' }}
