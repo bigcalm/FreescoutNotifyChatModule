@@ -209,7 +209,7 @@
                                 Normal
                             </option>
                             <option
-                                value="low" {{ $settings['mattermost_priority_level'] == 'important' ? 'selected' : '' }}>
+                                value="important" {{ $settings['mattermost_priority_level'] == 'important' ? 'selected' : '' }}>
                                 Important
                             </option>
                             <option
