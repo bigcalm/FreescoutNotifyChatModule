@@ -28,7 +28,8 @@
                             <div class="onoffswitch-wrap">
                                 <div class="onoffswitch">
                                     <input type="checkbox" name="discord_enabled" id="discord_enabled" class="onoffswitch-checkbox"
-                                        {!! $settings['discord_enabled'] ? "checked" : "" !!}
+                                           {!! $settings['discord_enabled'] ? "checked" : "" !!}
+                                           data-toggle-targets="discord_webhook_url"
                                     >
                                     <label class="onoffswitch-label" for="discord_enabled"></label>
                                 </div>
@@ -41,7 +42,11 @@
                     <label class="col-sm-2 control-label">{{ __("Discord webhook URL") }}</label>
 
                     <div class="col-sm-6">
-                        <input name="discord_webhook_url" class="form-control" placeholder="https://discord.com/api/webhooks/..." value="{{ $settings['discord_webhook_url'] }}" required />
+                        <input name="discord_webhook_url" id="discord_webhook_url" class="form-control"
+                            placeholder="https://discord.com/api/webhooks/..."
+                            value="{{ $settings['discord_webhook_url'] }}"
+                            {{ $settings['discord_enabled'] ? '' : 'disabled' }}
+                            {{ $settings['discord_enabled'] ? 'required' : '' }} />
                     </div>
                 </div>
             </fieldset>
@@ -58,6 +63,7 @@
                                 <div class="onoffswitch">
                                     <input type="checkbox" name="slack_enabled" id="slack_enabled" class="onoffswitch-checkbox"
                                         {!! $settings['slack_enabled'] ? "checked" : "" !!}
+                                        data-toggle-targets="slack_webhook_url"
                                     >
                                     <label class="onoffswitch-label" for="slack_enabled"></label>
                                 </div>
@@ -70,7 +76,11 @@
                     <label class="col-sm-2 control-label">{{ __("Slack webhook URL") }}</label>
 
                     <div class="col-sm-6">
-                        <input name="slack_webhook_url" class="form-control" placeholder="https://discord.com/api/webhooks/..." value="{{ $settings['slack_webhook_url'] }}" required />
+                        <input name="slack_webhook_url" id="slack_webhook_url" class="form-control"
+                               placeholder="https://discord.com/api/webhooks/..."
+                               value="{{ $settings['slack_webhook_url'] }}"
+                            {{ $settings['slack_enabled'] ? '' : 'disabled' }}
+                            {{ $settings['slack_enabled'] ? 'required' : '' }} />
                     </div>
                 </div>
             </fieldset>

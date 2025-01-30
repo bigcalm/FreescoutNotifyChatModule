@@ -34,6 +34,11 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
         $this->registerFactories();
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
 
+        \Eventy::addFilter('javascripts', function($value) {
+            $javascripts[] = \Module::getPublicPath(NOTIFY_CHAT_MODULE).'/js/module.js';
+            return $javascripts;
+        });
+
         \Eventy::addAction('mailboxes.settings.menu', function($mailbox) {
             if (auth()->user()->isAdmin()) {
                 echo \View::make('notifychat::partials/settings_menu', ['mailbox' => $mailbox])->render();
