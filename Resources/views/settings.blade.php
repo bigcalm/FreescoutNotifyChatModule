@@ -243,6 +243,8 @@
             </div>
         </form>
     </div>
+
+    <script src="{{ asset(\Module::getPublicPath(NOTIFY_CHAT_MODULE).'/js/module.js') }}"></script>
 @endsection
 
 @section('body_bottom')
