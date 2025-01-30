@@ -82,10 +82,19 @@ class NotifyChatModuleController extends Controller
             $settings['mailbox_id'] = $mailbox_id;
             $settings["discord_enabled"] = false;
             $settings['discord_webhook_url'] = "";
+
             $settings["slack_enabled"] = false;
             $settings['slack_webhook_url'] = "";
+
             $settings["mattermost_enabled"] = false;
             $settings['mattermost_webhook_url'] = "";
+            $settings['mattermost_channel_override'] = "";
+            $settings['mattermost_username_override'] = "";
+            $settings['mattermost_icon_url_override'] = "";
+            $settings['mattermost_icon_emoji_override'] = "";
+            $settings['mattermost_priority_level'] = "";
+            $settings['mattermost_priority_requested_ack'] = false;
+            $settings['mattermost_priority_urgent_persistent_notifications'] = false;
         }
 
         return view('notifychat::settings', [
@@ -100,10 +109,19 @@ class NotifyChatModuleController extends Controller
             [
                 'discord_enabled' => isset($_POST['discord_enabled']),
                 'discord_webhook_url' => $request->get("discord_webhook_url"),
+
                 'slack_enabled' => isset($_POST['slack_enabled']),
                 'slack_webhook_url' => $request->get("slack_webhook_url"),
+
                 'mattermost_enabled' => isset($_POST['mattermost_enabled']),
                 'mattermost_webhook_url' => $request->get("mattermost_webhook_url"),
+                'mattermost_channel_override' => $request->get("mattermost_channel_override"),
+                'mattermost_username_override' => $request->get("mattermost_username_override"),
+                'mattermost_icon_url_override' => $request->get("mattermost_icon_url_override"),
+                'mattermost_icon_emoji_override' => $request->get("mattermost_icon_emoji_override"),
+                'mattermost_priority_level' => $request->get("mattermost_priority_level"),
+                'mattermost_priority_requested_ack' => isset($_POST['mattermost_priority_requested_ack']),
+                'mattermost_priority_urgent_persistent_notifications' => isset($_POST['mattermost_priority_urgent_persistent_notifications'])
             ]
         );
 
