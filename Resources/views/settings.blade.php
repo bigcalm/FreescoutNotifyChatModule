@@ -233,7 +233,10 @@
 
                 <div class="form-group">
                     <label for="mattermost_priority_requested_ack"
-                           class="col-sm-2 control-label">{{ __("Enable message acknowledgement") }}</label>
+                           class="col-sm-2 control-label">
+                        {{ __("Enable message acknowledgement") }}
+                        (<a href="https://docs.mattermost.com/collaborate/message-priority.html#request-acknowledgements" target="_blank">Enterprise & Professional only</a>)
+                    </label>
 
                     <div class="col-sm-6">
                         <div class="controls">
@@ -251,8 +254,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="mattermost_priority_urgent_persistent_notifications"
-                           class="col-sm-2 control-label">{{ __("Enable persistent messages for urgent priority level") }}</label>
+                    <label for="mattermost_priority_urgent_persistent_notifications" class="col-sm-2 control-label">
+                        {{ __("Enable persistent messages for urgent priority level") }}
+                        (<a href="https://docs.mattermost.com/collaborate/message-priority.html#send-persistent-notifications" target="_blank">Enterprise & Professional only</a>)
+                    </label>
 
                     <div class="col-sm-6">
                         <div class="controls">
