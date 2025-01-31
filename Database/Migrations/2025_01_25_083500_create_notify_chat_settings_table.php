@@ -24,6 +24,7 @@ class CreateNotifyChatSettingsTable extends Migration
 
             $table->boolean('mattermost_enabled')->default(false);
             $table->string('mattermost_webhook_url')->nullable();
+            $table->string('mattermost_color_override')->nullable();
             $table->string('mattermost_channel_override')->nullable();
             $table->string('mattermost_username_override')->nullable();
             $table->string('mattermost_icon_url_override')->nullable();

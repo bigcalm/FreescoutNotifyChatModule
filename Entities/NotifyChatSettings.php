@@ -22,6 +22,7 @@ class NotifyChatSettings extends Model
         'slack_webhook_url',
         'mattermost_enabled',
         'mattermost_webhook_url',
+        'mattermost_color_override',
         'mattermost_channel_override',
         'mattermost_username_override',
         'mattermost_icon_url_override',

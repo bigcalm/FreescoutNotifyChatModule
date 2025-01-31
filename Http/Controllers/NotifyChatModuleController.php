@@ -87,6 +87,7 @@ class NotifyChatModuleController extends Controller
             $settings['slack_webhook_url'] = "";
 
             $settings["mattermost_enabled"] = false;
+            $settings['mattermost_color_override'] = "";
             $settings['mattermost_webhook_url'] = "";
             $settings['mattermost_channel_override'] = "";
             $settings['mattermost_username_override'] = "";
@@ -115,6 +116,7 @@ class NotifyChatModuleController extends Controller
 
                 'mattermost_enabled' => isset($_POST['mattermost_enabled']),
                 'mattermost_webhook_url' => $request->get("mattermost_webhook_url"),
+                'mattermost_color_override' => $request->get("mattermost_color_override"),
                 'mattermost_channel_override' => $request->get("mattermost_channel_override"),
                 'mattermost_username_override' => $request->get("mattermost_username_override"),
                 'mattermost_icon_url_override' => $request->get("mattermost_icon_url_override"),

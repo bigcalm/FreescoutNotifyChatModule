@@ -273,6 +273,10 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
             ],
         ];
 
+        if (!empty($settings->mattermost_color_override)) {
+            $payload['attachments'][0]['color'] = $settings->mattermost_color_override;
+        }
+
         if (!empty($settings->mattermost_channel_override)) {
             $payload['channel'] = $settings->mattermost_channel_override;
         }

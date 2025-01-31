@@ -133,7 +133,7 @@
                                 <div class="onoffswitch">
                                     <input type="checkbox" name="mattermost_enabled" id="mattermost_enabled"
                                            class="onoffswitch-checkbox"
-                                           data-toggle-targets="mattermost_webhook_url,mattermost_channel_override,mattermost_username_override,mattermost_icon_url_override,mattermost_icon_emoji_override,mattermost_priority_level,mattermost_priority_requested_ack,mattermost_priority_urgent_persistent_notifications"
+                                           data-toggle-targets="mattermost_webhook_url,mattermost_color_override,mattermost_channel_override,mattermost_username_override,mattermost_icon_url_override,mattermost_icon_emoji_override,mattermost_priority_level,mattermost_priority_requested_ack,mattermost_priority_urgent_persistent_notifications"
                                         {!! $settings['mattermost_enabled'] ? "checked" : "" !!}
                                     />
                                     <label class="onoffswitch-label" for="mattermost_enabled"></label>
@@ -157,6 +157,16 @@
                 </div>
 
                 <!-- Optional settings -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ __("Color override") }}</label>
+
+                    <div class="col-sm-6">
+                        <input name="mattermost_color_override" class="form-control" id="mattermost_color_override"
+                               placeholder="#92C5EB"
+                               value="{{ $settings['mattermost_color_override'] }}" {{ $settings['mattermost_enabled'] ? '' : 'disabled' }} />
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label class="col-sm-2 control-label">{{ __("Channel override") }}</label>
 
@@ -192,6 +202,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">{{ __("Icon emoji override") }}</label>
 
+                    <a href="https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md" target="_blank">Emoji cheet sheet</a>
                     <div class="col-sm-6">
                         <input name="mattermost_icon_emoji_override" id="mattermost_icon_emoji_override"
                                class="form-control" placeholder=":ghost:"
