@@ -64,9 +64,10 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
             if ($settings->mattermost_enabled && !empty($settings->mattermost_webhook_url)) {
                 $this->sendToMattermost(
                     $settings,
-                    "New Support Ticket",
+                    $conversation->subject ?? "New Support Ticket",
                     $conversation_url,
                     "A new support ticket has been created!",
+                    $thread->getBodyAsText(),
                     $this->compileMattermostFields($conversation, $thread, $customer)
                 );
             }
@@ -96,9 +97,10 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
             if ($settings->mattermost_enabled && !empty($settings->mattermost_webhook_url)) {
                 $this->sendToMattermost(
                     $settings,
-                    "New Reply to Ticket",
+                    $conversation->subject ?? "New Reply to Ticket",
                     $conversation_url,
                     "A new reply has been sent by the customer!",
+                    $thread->getBodyAsText(),
                     $this->compileMattermostFields($conversation, $thread, $customer)
                 );
             }
@@ -229,11 +231,6 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
                 "title" => "Subject",
                 "value" => $conversation->subject,
                 "short" => true
-            ],
-            [
-                "title" => "Body",
-                "value" => $thread->getBodyAsText().substr(0, 500),
-                "short" => false
             ]
         ];
     }
@@ -259,13 +256,14 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
         // @TODO: Implement Slack webhook
     }
 
-    public function sendToMattermost(NotifyChatSettings $settings, $title, $url, $description, $fields): void
+    public function sendToMattermost(NotifyChatSettings $settings, string $title, string $url, string $description, string $body, array $fields): void
     {
         $payload = [
             'attachments' => [
                 [
                     'fallback' => $description,
                     'pretext' => $description,
+                    'text' => $body,
                     'title' => $title,
                     'title_link' => $url,
                     'fields' => $fields
@@ -328,11 +326,15 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
             curl_setopt($ch, CURLOPT_TIMEOUT, config('app.curl_timeout'));
             curl_setopt($ch, CURLOPT_PROXY, config('app.proxy'));
 
+            if (curl_error($ch)) {
+                \Log::error('[Debugging] NotifyChat - curlRequest - curl_error: ' . curl_error($ch));
+            }
+
             curl_exec($ch);
             curl_close($ch);
         }
         catch (\Exception $e) {
-            logger($e->getMessage());
+            \Log::error('[Debugging] NotifyChat - curlRequest - Exception: ' . $e->getMessage());
         }
     }
 }
