@@ -262,13 +262,15 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
     public function sendToMattermost(NotifyChatSettings $settings, $title, $url, $description, $fields): void
     {
         $payload = [
-            "attachments" => [
-                'fallback' => $description,
-                "pretext" => $description,
-                "title" => $title,
-                "title_link" => $url,
-                "fields" => $fields
-            ]
+            'attachments' => [
+                [
+                    'fallback' => $description,
+                    'pretext' => $description,
+                    'title' => $title,
+                    'title_link' => $url,
+                    'fields' => $fields
+                ],
+            ],
         ];
 
         if (!empty($settings->mattermost_channel_override)) {
@@ -303,14 +305,17 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
 
         $json_data = json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-        $this->curlRequest($settings->webhook_url, $json_data);
+        $this->curlRequest($settings->mattermost_webhook_url, $json_data);
     }
 
     public function curlRequest($webhook_url, $json_data): void
     {
         try {
             $ch = curl_init($webhook_url);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($json_data)
+            ]);
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
