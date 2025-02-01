@@ -57,8 +57,14 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
             }
 
             if ($settings->slack_enabled && !empty($settings->slack_webhook_url)) {
-                // @TODO: Implement Slack webhook
-//                $this->sendToSlack();
+                $this->sendToSlack(
+                    $settings,
+                    $conversation->subject ?? "New Support Ticket",
+                    $conversation_url,
+                    "A new support ticket has been created!",
+                    $thread->getBodyAsText(),
+                    $this->compileSlackAndMattermostFields($conversation, $thread, $customer)
+                );
             }
 
             if ($settings->mattermost_enabled && !empty($settings->mattermost_webhook_url)) {
@@ -68,7 +74,7 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
                     $conversation_url,
                     "A new support ticket has been created!",
                     $thread->getBodyAsText(),
-                    $this->compileMattermostFields($conversation, $thread, $customer)
+                    $this->compileSlackAndMattermostFields($conversation, $thread, $customer)
                 );
             }
         }, 20, 3);
@@ -90,8 +96,13 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
             }
 
             if ($settings->slack_enabled && !empty($settings->slack_webhook_url)) {
-                // @TODO: Implement Slack webhook
-//                $this->sendToSlack();
+                $this->sendToSlack(
+                    $settings,
+                    $conversation->subject ?? "New Reply to Ticket",
+                    $conversation_url,
+                    "A new reply has been sent by the customer!",
+                    $thread->getBodyAsText()
+                );
             }
 
             if ($settings->mattermost_enabled && !empty($settings->mattermost_webhook_url)) {
@@ -101,7 +112,7 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
                     $conversation_url,
                     "A new reply has been sent by the customer!",
                     $thread->getBodyAsText(),
-                    $this->compileMattermostFields($conversation, $thread, $customer)
+                    $this->compileSlackAndMattermostFields($conversation, $thread, $customer)
                 );
             }
         }, 20, 3);
@@ -214,7 +225,7 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
         ];
     }
 
-    public function compileMattermostFields(Conversation $conversation, Thread $thread, Customer $customer): array
+    public function compileSlackAndMattermostFields(Conversation $conversation, Thread $thread, Customer $customer): array
     {
         return [
             [
@@ -249,11 +260,47 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
             ]]
         ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-        $this->curlRequest($webhook_url, $json_data);
+        $this->curlRequest($webhook_url, $json_data, 'json');
     }
 
-    public function sendToSlack($webhook_url, $title, $url, $description, $fields) {
-        // @TODO: Implement Slack webhook
+    public function sendToSlack(NotifyChatSettings $settings, string $title, string $url, string $description, string $body, array $fields) {
+        $payload = [
+            'attachments' => [
+                [
+                    'fallback' => $description,
+                    'pretext' => $description,
+                    'text' => join(PHP_EOL, [
+                        '<a href="' . $url . '">' . $title . '</a>',
+                        $body,
+                        ]),
+                    'fields' => $fields
+                ],
+            ],
+        ];
+
+        if (!empty($settings->slack_color_override)) {
+            $payload['attachments'][0]['color'] = $settings->slack_color_override;
+        }
+
+        if (!empty($settings->slack_channel_override)) {
+            $payload['channel'] = $settings->slack_channel_override;
+        }
+
+        if (!empty($settings->slack_username_override)) {
+            $payload['username'] = $settings->slack_username_override;
+        }
+
+        if (!empty($settings->slack_icon_url_override)) {
+            $payload['icon_url'] = $settings->slack_icon_url_override;
+        }
+
+        if (!empty($settings->slack_icon_emoji_override)) {
+            $payload['icon_emoji'] = $settings->slack_icon_emoji_override;
+        }
+
+        $json_data = json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+        $this->curlRequest($settings->slack_webhook_url, $json_data, 'json');
     }
 
     public function sendToMattermost(NotifyChatSettings $settings, string $title, string $url, string $description, string $body, array $fields): void
@@ -307,19 +354,32 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
 
         $json_data = json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-        $this->curlRequest($settings->mattermost_webhook_url, $json_data);
+        $this->curlRequest($settings->mattermost_webhook_url, $json_data, 'json');
     }
 
-    public function curlRequest($webhook_url, $json_data): void
+    public function curlRequest(string $webhook_url, string $data, string $dataType = null): void
     {
         try {
             $ch = curl_init($webhook_url);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                'Content-Type: application/json',
-                'Content-Length: ' . strlen($json_data)
-            ]);
+
+            $headers = [
+                'Content-Length: ' . strlen($data)
+            ];
+
+            switch ($dataType) {
+                case 'form':
+                    $headers[] = 'Content-Type: application/x-www-form-urlencoded';
+                    break;
+
+                case 'json':
+                default:
+                    $headers[] = 'Content-Type: application/json';
+                    break;
+            }
+
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
             curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
             curl_setopt($ch, CURLOPT_HEADER, 0);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

@@ -16,10 +16,18 @@ class NotifyChatSettings extends Model
 
     protected $fillable = [
         'mailbox_id',
+
         'discord_enabled',
         'discord_webhook_url',
+
         'slack_enabled',
         'slack_webhook_url',
+        'slack_color_override',
+        'slack_channel_override',
+        'slack_username_override',
+        'slack_icon_url_override',
+        'slack_icon_emoji_override',
+
         'mattermost_enabled',
         'mattermost_webhook_url',
         'mattermost_color_override',

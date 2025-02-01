@@ -21,6 +21,11 @@ class CreateNotifyChatSettingsTable extends Migration
 
             $table->boolean('slack_enabled')->default(false);
             $table->string('slack_webhook_url')->nullable();
+            $table->string('slack_color_override')->nullable();
+            $table->string('slack_channel_override')->nullable();
+            $table->string('slack_username_override')->nullable();
+            $table->string('slack_icon_url_override')->nullable();
+            $table->string('slack_icon_emoji_override')->nullable();
 
             $table->boolean('mattermost_enabled')->default(false);
             $table->string('mattermost_webhook_url')->nullable();

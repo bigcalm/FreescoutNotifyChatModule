@@ -87,7 +87,7 @@
                                 <div class="onoffswitch">
                                     <input type="checkbox" name="slack_enabled" id="slack_enabled"
                                            class="onoffswitch-checkbox"
-                                           data-toggle-targets="slack_webhook_url"
+                                           data-toggle-targets="slack_webhook_url,slack_color_override,slack_channel_override,slack_username_override,slack_icon_url_override,slack_icon_emoji_override"
                                         {!! $settings['slack_enabled'] ? "checked" : "" !!}
                                     />
                                     <label class="onoffswitch-label" for="slack_enabled"></label>
@@ -107,6 +107,60 @@
                                required="required"
                             {{ $settings['slack_enabled'] ? '' : 'disabled' }}
                         />
+                    </div>
+                </div>
+
+                <!-- Optional settings -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ __("Color override") }}</label>
+
+                    <div class="col-sm-6">
+                        <input name="slack_color_override" class="form-control" id="slack_color_override"
+                               placeholder="#92C5EB"
+                               value="{{ $settings['slack_color_override'] }}" {{ $settings['slack_enabled'] ? '' : 'disabled' }} />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ __("Channel override") }}</label>
+
+                    <div class="col-sm-6">
+                        <input name="slack_channel_override" class="form-control" id="slack_channel_override"
+                               placeholder="#channel-name or @user-name"
+                               value="{{ $settings['slack_channel_override'] }}" {{ $settings['slack_enabled'] ? '' : 'disabled' }} />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ __("Username override") }}</label>
+
+                    <div class="col-sm-6">
+                        <input name="slack_username_override" id="slack_username_override"
+                               class="form-control"
+                               placeholder="freescout-notification"
+                               value="{{ $settings['slack_username_override'] }}" {{ $settings['slack_enabled'] ? '' : 'disabled' }} />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ __("Icon URL override") }}</label>
+
+                    <div class="col-sm-6">
+                        <input name="slack_icon_url_override" id="slack_icon_url_override"
+                               class="form-control"
+                               placeholder="https://example.com/icon.png"
+                               value="{{ $settings['slack_icon_url_override'] }}" {{ $settings['slack_enabled'] ? '' : 'disabled' }} />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ __("Icon emoji override") }}</label>
+
+                    <a href="https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md" target="_blank">Emoji cheet sheet</a>
+                    <div class="col-sm-6">
+                        <input name="slack_icon_emoji_override" id="slack_icon_emoji_override"
+                               class="form-control" placeholder=":ghost:"
+                               value="{{ $settings['slack_icon_emoji_override'] }}" {{ $settings['slack_enabled'] ? '' : 'disabled' }} />
                     </div>
                 </div>
             </fieldset>
