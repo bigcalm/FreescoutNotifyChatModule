@@ -101,7 +101,8 @@ class NotifyChatModuleServiceProvider extends ServiceProvider
                     $conversation->subject ?? "New Reply to Ticket",
                     $conversation_url,
                     "A new reply has been sent by the customer!",
-                    $thread->getBodyAsText()
+                    $thread->getBodyAsText(),
+                    $this->compileSlackAndMattermostFields($conversation, $thread, $customer)
                 );
             }
 
